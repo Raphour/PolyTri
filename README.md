@@ -1,10 +1,10 @@
 # Carte interactive de points de tri autour de Nantes
 
 ## Membres :
-TOFANI Enzo
-SILLY Raphael
-PIERRE Pablo
-MAHDIR Hamza
+TOFANI Enzo,
+SILLY Raphael,
+PIERRE Pablo,
+MAHDIR Hamza,
 EL MAGHRAOUI Yassine
 
 ### Projet
