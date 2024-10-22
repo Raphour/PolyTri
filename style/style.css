@@ -1,5 +1,8 @@
 body {
 	max-height: 100vh;
+	margin: 0px;
+
+	font-family: "Roboto", sans-serif;
 }
 
 .main {
@@ -8,7 +11,16 @@ body {
 }
 
 h1 {
-	margin: 0px;
+	font-weight: 800;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+h6 {
+	font-weight: 500;
+	margin-top: 0px;
+	margin-bottom: 10px;
 }
 
 #bulle {
@@ -21,6 +33,30 @@ h1 {
 	border-radius: 5px;
 	padding: 10px;
 	background-color: white;
+
+	& img {
+		width: 15vw;
+	}
+
+	& p {
+		font-size: 22px;
+		font-weight: 500;
+		margin: 0px;
+	}
+}
+
+input[type="checkbox"] {
+	margin: 0px;
+	margin-right: 5px;
+	margin-left: 10px;
+}
+
+.separator {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 90%;
+	height: 3px;
+	background-color: black;
 }
 
 #map {
