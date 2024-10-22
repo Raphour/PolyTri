@@ -1,4 +1,36 @@
-#map {
-    height: 90vh;
+body {
+	max-height: 100vh;
+}
 
+.main {
+	position: relative;
+	top: 0px;
+}
+
+h1 {
+	margin: 0px;
+}
+
+#bulle {
+	z-index: 1;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	
+	border: 3px solid black;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: white;
+}
+
+#map {
+	position: relative;
+	top: 0px;
+	height: 95vh;
+	z-index: 0;
+}
+
+footer {
+	bottom: 0px;
+	height: 5vh;
 }
