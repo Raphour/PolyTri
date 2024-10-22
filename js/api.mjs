@@ -78,3 +78,18 @@ export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, dech
 
     return lieuxFiltres;
 }
+
+export async function getHoraireDecheterie(id){
+    // {
+    //     "idobj":"1011",
+    //     "nom":"Déchèterie de La Prairie de Mauves",
+    //     "periode":"Horaires 2023 - 2eme semestre",
+    //     "date_debut":"2023-09-04",
+    //     "date_fin":"2024-01-31",
+    //     "jour":"lundi",
+    //     "date_exception":null,
+    //     "heure_debut":"10:00",
+    //     "heure_fin":"17:45",
+    //     "type_horaire":"Ouverture"
+    //     }
+}
