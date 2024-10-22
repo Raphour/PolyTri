@@ -12,7 +12,7 @@ export function getComposteurPopUp(composteur) {
 
 
 export function getDecheteriePopUp(decheterie) {
-   let type_dechets = typeDechetsDecheterie;
+    let type_dechets = typeDechetsDecheterie;
     let dechets = type_dechets.map(dechet => {
         if (decheterie[dechet] === "oui") {
             return `<div class="type-dechet-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_oui.png" alt="tick" title="Accepté"> ${formatDechet(dechet)}</div>`
@@ -22,10 +22,12 @@ export function getDecheteriePopUp(decheterie) {
     })
 
     return `
+    <div class="popup-container">
         <h3>${decheterie.type}</h3>  
         <h2>${decheterie.nom}</h2>
         <a href="https://www.google.com/maps/search/?api=1&query=${decheterie.geo_point_2d.lat}%2C${decheterie.geo_point_2d.lon}" target ="_blank">Adresse : ${decheterie.adresse}</a>
         <h3>Déchets acceptés :</h3>
-        <div>${dechets.join('')}</div>
+        <div class="type-dechets-grid-container">${dechets.join('')}</div>
+    </div>
         `
 }
