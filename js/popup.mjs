@@ -1,4 +1,5 @@
 import { formatDechet } from "./utils.mjs";
+import { typeDechetsDecheterie } from "./constante.mjs";
 
 export function getComposteurPopUp(composteur) {
     console.log(composteur.location.lat);
@@ -11,8 +12,7 @@ export function getComposteurPopUp(composteur) {
 
 
 export function getDecheteriePopUp(decheterie) {
-   let type_dechets = ["bois", "carton", "deee", "pneus", "verre", "mobilier", "extincteur", "batterie", "gravat", "encombrant", "ferraille", "huile_moteur", "papier", "placoplatre", "textile", "dechet_vert", "pile", "cartouche", "neon", "dechet_dangereux", "bouteille_gaz", "polystyrene"];
-
+   let type_dechets = typeDechetsDecheterie;
     let dechets = type_dechets.map(dechet => {
         if (decheterie[dechet] === "oui") {
             return `<div class="type-dechet-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_oui.png" alt="tick" title="Accepté"> ${formatDechet(dechet)}</div>`

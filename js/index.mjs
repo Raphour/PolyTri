@@ -1,5 +1,6 @@
-import { getComposteurs, getDecheteries } from "./api.mjs";
+import { getComposteurs, getDecheteries, getDecheteriesParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
+import { typeDechetsDecheterie } from "./constante.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
     let lat = 47.218371;
     let lon = -1.553621;
@@ -19,6 +20,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }).addTo(map);
     //await displayComposteurs(map,true, categorieComposteurs);
     await displayDecheterie(map, true, categorieDecheteries);
+    setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
+
 
 
 });
@@ -39,10 +42,6 @@ async function displayComposteurs(map, firstDisplay, categorieComposteurs) {
     categorieComposteurs.addTo(map);
 }
 
-function hideComposteurs(map, categorieComposteurs) {
-    map.removeLayer(categorieComposteurs);
-}
-
 
 async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     if (firstDisplay) {
@@ -56,9 +55,36 @@ async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     categorieDecheteries.addTo(map);
 }
 
+function setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map) {
+    let button_filtre = document.getElementById("button_filtre");
+    let type_dechets = typeDechetsDecheterie;
+    // add button click event
+    button_filtre.addEventListener("click", async () => {
+        // regarder l'etat des checkboxs ayant pour id le type de dechets
+        let filtres = type_dechets.filter(dechet => {
+            return document.getElementById(dechet).checked;
+        });
 
+        // On récupère les decheteries
+        let decheteries = await getDecheteriesParDechetsPossibles(filtres);
+        categorieDecheteries.clearLayers();
 
-function hideDecheteries(map, categorieDecheteries) {
-    map.removeLayer(categorieDecheteries);
+        // ajouter les marker au groupe
+        decheteries.forEach(decheterie => {
+            let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
+            marker.bindPopup(getDecheteriePopUp(decheterie));
+            marker.addTo(categorieDecheteries);
+        });
+
+        displayDecheterie(map, false, categorieDecheteries);
+    });
+}
+
+function hideGroup(categorie) {
+    map.removeLayer(categorie);
+}
+
+function showGroup(categorie) {
+    map.addLayer(categorie);
 }
 

@@ -1,0 +1,2 @@
+export let typeDechetsDecheterie = ["bois", "carton", "deee", "pneus", "verre", "mobilier", "extincteur", "batterie", "gravat", "encombrant", "ferraille", "huile_moteur", "papier", "placoplatre", "textile", "dechet_vert", "pile", "cartouche", "neon", "dechet_dangereux", "bouteille_gaz", "polystyrene"];
+export let typeLieuTriage = ["composteur", "decheterie"];

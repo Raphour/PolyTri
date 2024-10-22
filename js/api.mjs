@@ -30,13 +30,8 @@ export async function getComposteurs() {
 }
 
 export async function getDecheteries() {
-    let lien = '/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?limit=20'
-
-
+    let lien = '/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?where=type%3D%22Déchèterie%22&limit=20'
     const decheteries = [];
-
-    // Une seule requete est nécessaire ici
-
     const response = await fetch(`${base_url}${lien}`);
     const data = await response.json();
     if (Array.isArray(data.results)) {
@@ -44,15 +39,13 @@ export async function getDecheteries() {
     } else {
         console.error('Les résultats ne sont pas un tableau:', data.results);
     }
-
     console.log(decheteries); // Decheteries est maintenant rempli
-
     return decheteries; // Retourner les decheteries une fois que tout est terminé
 
 }
 
 
-async function getDecheteriesParDechetsPossibles(dechets){
+export async function getDecheteriesParDechetsPossibles(dechets){
     // On récupère les décheteries
     let decheteries = await getDecheteries();
 
