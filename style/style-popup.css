@@ -1,0 +1,10 @@
+.type-dechet-popup-container{
+
+    display: flex;
+    text-align: center;
+    justify-content: flex-start;
+}
+.dechet-popup-icon {
+    max-width: 10px;
+    margin: 5px;
+}

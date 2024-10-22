@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     let categorieComposteurs = L.layerGroup();  
-
+    let categorieDecheteries = L.layerGroup();
     // On ajoute le calque permettant d'afficher les images de la carte
     L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
         minZoom: 1,
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>'
     }).addTo(map);
     //await displayComposteurs(map,true, categorieComposteurs);
-    await displayDecheterie(map);
+    await displayDecheterie(map, true, categorieDecheteries);
 
 
 });
@@ -44,19 +44,21 @@ function hideComposteurs(map, categorieComposteurs) {
 }
 
 
-async function displayDecheterie(map) {
-    let decheteries = await getDecheteries();
-    {
-        
-        // }
-        // },
-
+async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
+    if (firstDisplay) {
+        let decheteries = await getDecheteries();
         decheteries.forEach(decheterie => {
             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
             marker.bindPopup(getDecheteriePopUp(decheterie));
-            marker.addTo(map);
-        }
-        )
+            marker.addTo(categorieDecheteries);
+        })
     }
+    categorieDecheteries.addTo(map);
+}
+
+
+
+function hideDecheteries(map, categorieDecheteries) {
+    map.removeLayer(categorieDecheteries);
 }
 

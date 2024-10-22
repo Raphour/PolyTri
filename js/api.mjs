@@ -32,6 +32,7 @@ export async function getComposteurs() {
 export async function getDecheteries() {
     let lien = '/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?limit=20'
 
+
     const decheteries = [];
 
     // Une seule requete est nécessaire ici
@@ -48,4 +49,17 @@ export async function getDecheteries() {
 
     return decheteries; // Retourner les decheteries une fois que tout est terminé
 
+}
+
+
+async function getDecheteriesParDechetsPossibles(dechets){
+    // On récupère les décheteries
+    let decheteries = await getDecheteries();
+
+    // On filtre les décheteries en fonction des déchets possibles
+    let decheteriesFiltrees = decheteries.filter(decheterie => {
+        return dechets.every(dechet => decheterie[dechet] === "oui");
+    });
+
+    return decheteriesFiltrees;
 }
