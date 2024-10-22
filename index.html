@@ -9,7 +9,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
 
 
     <title>Nantes Tri</title>
@@ -24,25 +26,40 @@
 </head>
 
 <body>
-	<div id="main">
-		<div id="bulle" class="superpose dessus">
+    <div id="main">
+        <div id="bulle" class="superpose dessus">
             <img src="assets/PolytechNantes.png" alt="">
-			<h1>Poly'Tri</h1>
-			<p>Afficher</p>
+            <h1>Poly'Tri</h1>
+            <p>Afficher</p>
             <form id="form">
-                <input id="dechetterie" type="checkbox"><label for="dechetterie">Déchetteries</label>
+                <div class="type-lieux-filter-container">
+                    <div>
+                        <input id="checkbox-filtre-dechetterie" type="checkbox" checked><label
+                            for="checkbox-filtre-dechetterie">Déchetteries</label>
+                    </div>
+                    <div>
+                        <input id="checkbox-filtre-ecopoint" type="checkbox" checked><label
+                            for="checkbox-filtre-ecopoint">Ecopoints</label>
+                    </div>
+                    <div>
+                        <input id="checkbox-filtre-composteur" type="checkbox"><label
+                            for="checkbox-filtre-composteur">Composteurs</label>
+                    </div>
+
+                </div>
+
                 <div class="separator"></div>
                 <p>Trier</p>
                 <h6>*Uniquement pour les déchetteries et écopoints</h6>
-                <input id="bois" type="checkbox"><label for="bois">Bois</label>
+                <div id="type-dechets-filter-container"></div>
             </form>
-            <button type="submit">Rechercher</button>
-		</div>
-    	<!-- Création d'un conteneur pour la carte -->
-    	<div id="map" class="superpose"></div>
-	</div>
+            <button type="submit" id="submit-filter">Rechercher</button>
+        </div>
+        <!-- Création d'un conteneur pour la carte -->
+        <div id="map" class="superpose"></div>
+    </div>
 
-	<footer>
+    <footer>
         <div class="separator"></div>
         Projet réalisé par SILLY Raphael, TOFANI Enzo, PIERRE Pablo, MAHDIR Hamza et EL MAGHRAOUI Yassine
     </footer>

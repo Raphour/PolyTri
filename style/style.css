@@ -97,6 +97,16 @@ button {
 	z-index: 0;
 }
 
+#type-dechets-filter-container
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.type-lieux-filter-container{
+	display: flex;
+	flex-direction: column;
+}
 footer {
 	& .separator {
 		margin: 0px;

@@ -1,6 +1,7 @@
 import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesEtEcopointsParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
 import { typeDechetsDecheterie } from "./constante.mjs";
+import { formatDechet } from "./utils.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
     let lat = 47.218371;
     let lon = -1.553621;
@@ -23,14 +24,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     await displayDecheterie(map, true, categorieDecheteries);
     // setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
 
+    manageFilterButton(map, categorieDecheteries, categorieComposteurs);
+    manageSwitchCheckboxLieu();
+    // On rempli le type-dechets-filter-container avec les types de déchets
+    let type_dechets_filter_container = document.getElementById("type-dechets-filter-container");
+    typeDechetsDecheterie.forEach(dechet => {
+        let type_container = document.createElement("div");
+        type_container.setAttribute("class", "type-dechet-container");
+        let checkbox = document.createElement("input");
+        checkbox.setAttribute("class", "type-dechet-checkbox");
+        checkbox.type = "checkbox";
+        checkbox.id = dechet;
+        checkbox.checked = false;
+        let label = document.createElement("label");
+        label.htmlFor = dechet;
+        label.innerText = formatDechet(dechet);
+        type_container.appendChild(checkbox);
+        type_container.appendChild(label);
+        type_dechets_filter_container.appendChild(type_container);
+    });
+
 });
 
 
 async function displayComposteurs(map, firstDisplay, categorieComposteurs) {
+    // Supprimer les composteurs déjà affichés
+    categorieComposteurs.clearLayers();
     // On récupère les composteurs
     if (firstDisplay) {
         let composteurs = await getComposteurs();
-
+        console.log(composteurs);
         // On affiche les composteurs sur la carte
         composteurs.forEach(composteur => {
             let marker = L.marker([composteur.location.lat, composteur.location.lon]);
@@ -57,37 +80,76 @@ async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     categorieDecheteries.addTo(map);
 }
 
-// function setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map) {
-//     let button_filtre = document.getElementById("button_filtre");
-//     let type_dechets = typeDechetsDecheterie;
-//     // add button click event
-//     button_filtre.addEventListener("click", async () => {
-//         // regarder l'etat des checkboxs ayant pour id le type de dechets
-//         let filtres = type_dechets.filter(dechet => {
-//             return document.getElementById(dechet).checked;
-//         });
 
-//         // On récupère les decheteries
-//         let decheteries = await getDecheteriesParDechetsPossibles(filtres);
-//         categorieDecheteries.clearLayers();
 
-//         // ajouter les marker au groupe
-//         decheteries.forEach(decheterie => {
-//             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
-//             marker.bindPopup(getDecheteriePopUp(decheterie));
-//             marker.addTo(categorieDecheteries);
-//         });
-
-//         displayDecheterie(map, false, categorieDecheteries);
-//     });
-// }
-
-function hideGroup(categorie) {
+function hideGroup(map, categorie) {
     map.removeLayer(categorie);
 }
 
-function showGroup(categorie) {
+function showGroup(map, categorie) {
     map.addLayer(categorie);
 }
 
+async function manageFilterButton(map, categorieDecheteries, categorieComposteurs) {
+    let button = document.getElementById("submit-filter");
+
+    button.addEventListener("click", async () => {
+        console.log("click");
+        let decheterie = document.getElementById("checkbox-filtre-dechetterie").checked;
+        let ecopoints = document.getElementById("checkbox-filtre-ecopoint").checked;
+        let composteurs = document.getElementById("checkbox-filtre-composteur").checked;
+        if (composteurs) {
+            displayComposteurs(map, true, categorieComposteurs);
+        } else {
+            hideGroup(map, categorieComposteurs);
+        }
+        let dechets = typeDechetsDecheterie.filter(dechet => document.getElementById(dechet).checked);
+        let lieux = await getDecheteriesEtEcopointsParDechetsPossibles(dechets, decheterie, ecopoints);
+        categorieDecheteries.clearLayers();
+        lieux.forEach(lieu => {
+            let marker = L.marker([lieu.geo_point_2d.lat, lieu.geo_point_2d.lon]);
+            marker.bindPopup(getDecheteriePopUp(lieu));
+            marker.addTo(categorieDecheteries);
+        });
+        displayDecheterie(map, false, categorieDecheteries);
+    });
+}
+
+
+function manageSwitchCheckboxLieu() {
+    let checkbox_decheterie = document.getElementById("checkbox-filtre-dechetterie");
+    let checkbox_ecopoint = document.getElementById("checkbox-filtre-ecopoint");
+    checkbox_decheterie.addEventListener("change", (event) => {
+        if (!event.target.checked && !checkbox_ecopoint.checked) {
+            disableFiltreTypeDechet();
+        } else {
+            enableFiltreTypeDechet();
+        }
+    });
+    checkbox_ecopoint.addEventListener("change", (event) => {
+        if (!event.target.checked && !checkbox_decheterie.checked) {
+            disableFiltreTypeDechet();
+        } else {
+            enableFiltreTypeDechet();
+        }
+    });
+}
+
+function disableFiltreTypeDechet() {
+    let type_dechets = document.getElementsByClassName("type-dechet-checkbox");
+    for (let type_dechet of type_dechets) {
+        type_dechet.disabled = true;
+    }
+    let typeDechetsContainer = document.getElementById("type-dechets-filter-container");
+    typeDechetsContainer.style.opacity = "0.5";
+}
+
+function enableFiltreTypeDechet() {
+    let type_dechets = document.getElementsByClassName("type-dechet-checkbox");
+    for (let type_dechet of type_dechets) {
+        type_dechet.disabled = false;
+    }
+    let typeDechetsContainer = document.getElementById("type-dechets-filter-container");
+    typeDechetsContainer.style.opacity = "1";
+}
 
