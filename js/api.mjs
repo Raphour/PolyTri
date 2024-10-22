@@ -29,22 +29,38 @@ export async function getComposteurs() {
     return composteurs; // Retourner les composteurs une fois que tout est terminé
 }
 
-export async function getDecheteries() {
-    let lien = '/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?where=type%3D%22Déchèterie%22&limit=20'
-    const decheteries = [];
-    const response = await fetch(`${base_url}${lien}`);
-    const data = await response.json();
-    if (Array.isArray(data.results)) {
-        data.results.forEach(decheterie => decheteries.push(decheterie));
-    } else {
-        console.error('Les résultats ne sont pas un tableau:', data.results);
+
+
+
+export async function getLieuxTriage(lieux){
+    let result = [];
+    for (let lieu of lieux){
+
+        let lien = `/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?where=type%3D%22${lieu}%22&limit=20`
+
+        let response = await fetch(`${base_url}${lien}`);
+        let data = await response.json();
+        if (Array.isArray(data.results)) {
+            data.results.forEach(lieu => result.push(lieu));
+        } else {
+            console.error('Les résultats ne sont pas un tableau:', data.results);
+        }
     }
-    console.log(decheteries); // Decheteries est maintenant rempli
-    return decheteries; // Retourner les decheteries une fois que tout est terminé
+    return result;
 
 }
 
+export async function getDecheteries(){
+    return await getLieuxTriage(["Déchèterie"]);
+}
 
+export async function getEcopoints(){
+    return await getLieuxTriage(["Ecopoint"]);
+}
+
+export async function getDecheteriesEtEcopoints(){
+    return await getLieuxTriage(["Déchèterie", "Ecopoint"]);
+}
 export async function getDecheteriesParDechetsPossibles(dechets){
     // On récupère les décheteries
     let decheteries = await getDecheteries();

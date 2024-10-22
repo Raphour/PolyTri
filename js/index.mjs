@@ -1,4 +1,4 @@
-import { getComposteurs, getDecheteries, getDecheteriesParDechetsPossibles } from "./api.mjs";
+import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
 import { typeDechetsDecheterie } from "./constante.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         center: [lat, lon]
     });
 
-    let categorieComposteurs = L.layerGroup();  
+    let categorieComposteurs = L.layerGroup();
     let categorieDecheteries = L.layerGroup();
     // On ajoute le calque permettant d'afficher les images de la carte
     L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
@@ -20,9 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }).addTo(map);
     //await displayComposteurs(map,true, categorieComposteurs);
     await displayDecheterie(map, true, categorieDecheteries);
-    setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
-
-
+    // setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
 
 });
 
@@ -45,7 +43,7 @@ async function displayComposteurs(map, firstDisplay, categorieComposteurs) {
 
 async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     if (firstDisplay) {
-        let decheteries = await getDecheteries();
+        let decheteries = await getDecheteriesEtEcopoints();
         decheteries.forEach(decheterie => {
             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
             marker.bindPopup(getDecheteriePopUp(decheterie));
@@ -55,30 +53,30 @@ async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     categorieDecheteries.addTo(map);
 }
 
-function setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map) {
-    let button_filtre = document.getElementById("button_filtre");
-    let type_dechets = typeDechetsDecheterie;
-    // add button click event
-    button_filtre.addEventListener("click", async () => {
-        // regarder l'etat des checkboxs ayant pour id le type de dechets
-        let filtres = type_dechets.filter(dechet => {
-            return document.getElementById(dechet).checked;
-        });
+// function setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map) {
+//     let button_filtre = document.getElementById("button_filtre");
+//     let type_dechets = typeDechetsDecheterie;
+//     // add button click event
+//     button_filtre.addEventListener("click", async () => {
+//         // regarder l'etat des checkboxs ayant pour id le type de dechets
+//         let filtres = type_dechets.filter(dechet => {
+//             return document.getElementById(dechet).checked;
+//         });
 
-        // On récupère les decheteries
-        let decheteries = await getDecheteriesParDechetsPossibles(filtres);
-        categorieDecheteries.clearLayers();
+//         // On récupère les decheteries
+//         let decheteries = await getDecheteriesParDechetsPossibles(filtres);
+//         categorieDecheteries.clearLayers();
 
-        // ajouter les marker au groupe
-        decheteries.forEach(decheterie => {
-            let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
-            marker.bindPopup(getDecheteriePopUp(decheterie));
-            marker.addTo(categorieDecheteries);
-        });
+//         // ajouter les marker au groupe
+//         decheteries.forEach(decheterie => {
+//             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
+//             marker.bindPopup(getDecheteriePopUp(decheterie));
+//             marker.addTo(categorieDecheteries);
+//         });
 
-        displayDecheterie(map, false, categorieDecheteries);
-    });
-}
+//         displayDecheterie(map, false, categorieDecheteries);
+//     });
+// }
 
 function hideGroup(categorie) {
     map.removeLayer(categorie);

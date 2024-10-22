@@ -1,8 +1,10 @@
 .type-dechet-popup-container{
-
     display: flex;
     text-align: center;
     justify-content: flex-start;
+    flex-direction: row;
+    /*faire en sorte d'avoir deux element puis de wrap*/
+    
 }
 .dechet-popup-icon {
     max-width: 10px;
