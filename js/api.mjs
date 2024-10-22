@@ -32,9 +32,9 @@ export async function getComposteurs() {
 
 
 
-export async function getLieuxTriage(lieux){
+export async function getLieuxTriage(lieux) {
     let result = [];
-    for (let lieu of lieux){
+    for (let lieu of lieux) {
 
         let lien = `/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole/records?where=type%3D%22${lieu}%22&limit=20`
 
@@ -50,25 +50,31 @@ export async function getLieuxTriage(lieux){
 
 }
 
-export async function getDecheteries(){
+export async function getDecheteries() {
     return await getLieuxTriage(["Déchèterie"]);
 }
 
-export async function getEcopoints(){
+export async function getEcopoints() {
     return await getLieuxTriage(["Ecopoint"]);
 }
 
-export async function getDecheteriesEtEcopoints(){
+export async function getDecheteriesEtEcopoints() {
     return await getLieuxTriage(["Déchèterie", "Ecopoint"]);
 }
-export async function getDecheteriesParDechetsPossibles(dechets){
-    // On récupère les décheteries
-    let decheteries = await getDecheteries();
+export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, decheterie, ecopoints) {
+    let lieux = [];
+    if (decheterie) {
+        lieux.push("Déchèterie");
+    }
+    if (ecopoints) {
+        lieux.push("Ecopoint");
+    }
 
-    // On filtre les décheteries en fonction des déchets possibles
-    let decheteriesFiltrees = decheteries.filter(decheterie => {
-        return dechets.every(dechet => decheterie[dechet] === "oui");
+    let decheteriesEtEcopoints = await getLieuxTriage(lieux);
+
+    let lieuxFiltres = decheteriesEtEcopoints.filter(lieu => {
+        return dechets.every(dechet => lieu[dechet] === "oui");
     });
 
-    return decheteriesFiltrees;
+    return lieuxFiltres;
 }

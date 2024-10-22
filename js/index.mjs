@@ -1,4 +1,4 @@
-import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesParDechetsPossibles } from "./api.mjs";
+import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesEtEcopointsParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
 import { typeDechetsDecheterie } from "./constante.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let categorieComposteurs = L.layerGroup();
     let categorieDecheteries = L.layerGroup();
+
     // On ajoute le calque permettant d'afficher les images de la carte
     L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
         minZoom: 1,
@@ -46,7 +47,10 @@ async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
         let decheteries = await getDecheteriesEtEcopoints();
         decheteries.forEach(decheterie => {
             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
-            marker.bindPopup(getDecheteriePopUp(decheterie));
+            marker.bindPopup(getDecheteriePopUp(decheterie),
+                {
+                    maxWidth: "400px"
+                });
             marker.addTo(categorieDecheteries);
         })
     }
@@ -85,4 +89,5 @@ function hideGroup(categorie) {
 function showGroup(categorie) {
     map.addLayer(categorie);
 }
+
 

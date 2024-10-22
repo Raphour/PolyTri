@@ -1,9 +1,7 @@
-.type-dechet-popup-container {
+.type-dechet-icone-popup-container {
   display: flex;
   text-align: center;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: row;
+  align-items: baseline;
 }
 /* grid de 2 colonnes */
 .type-dechets-grid-container {
@@ -19,5 +17,5 @@
 }
 
 .popup-container {
-  width: 100%;
+  width: max-content;
 }

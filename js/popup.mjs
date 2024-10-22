@@ -15,9 +15,9 @@ export function getDecheteriePopUp(decheterie) {
     let type_dechets = typeDechetsDecheterie;
     let dechets = type_dechets.map(dechet => {
         if (decheterie[dechet] === "oui") {
-            return `<div class="type-dechet-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_oui.png" alt="tick" title="Accepté"> ${formatDechet(dechet)}</div>`
+            return `<div class="type-dechet-icone-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_oui.png" alt="tick" title="Accepté"> ${formatDechet(dechet)}</div>`
         } else {
-            return `<div class="type-dechet-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_non.png" alt="cross" title="Non accepté"> ${formatDechet(dechet)}</div>`
+            return `<div class="type-dechet-icone-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_non.png" alt="cross" title="Non accepté"> ${formatDechet(dechet)}</div>`
         }
     })
 
