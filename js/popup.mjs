@@ -2,7 +2,6 @@ import { formatDechet } from "./utils.mjs";
 import { typeDechetsDecheterie } from "./constante.mjs";
 
 export function getComposteurPopUp(composteur) {
-    console.log(composteur.location.lat);
     return `<h2>${composteur.nom}</h2>
         <p>${composteur.categorie}</p>
         <a href="https://www.google.com/maps/search/?api=1&query=${composteur.location.lat}%2C${composteur.location.lon}" target ="_blank">Adresse : ${composteur.adresse}</p>

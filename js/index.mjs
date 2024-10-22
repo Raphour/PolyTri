@@ -50,11 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function displayComposteurs(map, firstDisplay, categorieComposteurs) {
     // Supprimer les composteurs déjà affichés
     categorieComposteurs.clearLayers();
-    // On récupère les composteurs
     if (firstDisplay) {
         let composteurs = await getComposteurs();
-        console.log(composteurs);
-        // On affiche les composteurs sur la carte
         composteurs.forEach(composteur => {
             let marker = L.marker([composteur.location.lat, composteur.location.lon]);
             marker.bindPopup(getComposteurPopUp(composteur));
@@ -94,8 +91,7 @@ async function manageFilterButton(map, categorieDecheteries, categorieComposteur
     let button = document.getElementById("submit-filter");
 
     button.addEventListener("click", async () => {
-        console.log("click");
-        let decheterie = document.getElementById("checkbox-filtre-dechetterie").checked;
+        let decheterie = document.getElementById("checkbox-filtre-decheterie").checked;
         let ecopoints = document.getElementById("checkbox-filtre-ecopoint").checked;
         let composteurs = document.getElementById("checkbox-filtre-composteur").checked;
         if (composteurs) {
@@ -117,7 +113,7 @@ async function manageFilterButton(map, categorieDecheteries, categorieComposteur
 
 
 function manageSwitchCheckboxLieu() {
-    let checkbox_decheterie = document.getElementById("checkbox-filtre-dechetterie");
+    let checkbox_decheterie = document.getElementById("checkbox-filtre-decheterie");
     let checkbox_ecopoint = document.getElementById("checkbox-filtre-ecopoint");
     checkbox_decheterie.addEventListener("change", (event) => {
         if (!event.target.checked && !checkbox_ecopoint.checked) {

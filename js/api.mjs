@@ -25,7 +25,6 @@ export async function getComposteurs() {
     }
 
 
-    console.log(composteurs); // Composteurs est maintenant rempli
     return composteurs; // Retourner les composteurs une fois que tout est terminé
 }
 
@@ -79,7 +78,7 @@ export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, dech
     return lieuxFiltres;
 }
 
-export async function getHoraireDecheterie(id){
+export async function getHoraireDecheterie(id) {
     // {
     //     "idobj":"1011",
     //     "nom":"Déchèterie de La Prairie de Mauves",
