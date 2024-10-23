@@ -5,7 +5,6 @@ import { formatDechet } from "./utils.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
     let lat = 47.218371;
     let lon = -1.553621;
-
     let map = L.map("map", {
         zoom: 13,
         center: [lat, lon]
@@ -65,9 +64,9 @@ async function displayComposteurs(map, firstDisplay, categorieComposteurs) {
 async function displayDecheterie(map, firstDisplay, categorieDecheteries) {
     if (firstDisplay) {
         let decheteries = await getDecheteriesEtEcopoints();
-        decheteries.forEach(decheterie => {
+        decheteries.forEach(async (decheterie) => {
             let marker = L.marker([decheterie.geo_point_2d.lat, decheterie.geo_point_2d.lon]);
-            marker.bindPopup(getDecheteriePopUp(decheterie),
+            marker.bindPopup(await getDecheteriePopUp(decheterie),
                 {
                     maxWidth: "400px"
                 });

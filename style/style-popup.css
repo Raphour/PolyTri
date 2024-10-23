@@ -19,3 +19,16 @@
 .popup-container {
   width: max-content;
 }
+
+.horaire_popup_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.icon_horaire{
+  max-width: 15px;
+  max-height: 15px;
+  margin-right: 5px;
+}

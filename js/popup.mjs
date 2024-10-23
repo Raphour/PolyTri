@@ -1,5 +1,6 @@
 import { formatDechet } from "./utils.mjs";
-import { typeDechetsDecheterie } from "./constante.mjs";
+import { jours, typeDechetsDecheterie } from "./constante.mjs";
+import { getHoraireDecheterie } from "./api.mjs";
 
 export function getComposteurPopUp(composteur) {
     return `<h2>${composteur.nom}</h2>
@@ -10,7 +11,7 @@ export function getComposteurPopUp(composteur) {
 
 
 
-export function getDecheteriePopUp(decheterie) {
+export async function getDecheteriePopUp(decheterie) {
     let type_dechets = typeDechetsDecheterie;
     let dechets = type_dechets.map(dechet => {
         if (decheterie[dechet] === "oui") {
@@ -19,14 +20,37 @@ export function getDecheteriePopUp(decheterie) {
             return `<div class="type-dechet-icone-popup-container"><img class="dechet-popup-icon" src="assets/type_dechet_non.png" alt="cross" title="Non accepté"> ${formatDechet(dechet)}</div>`
         }
     })
-
-    return `
+    return `    
     <div class="popup-container">
         <h3>${decheterie.type}</h3>  
         <h2>${decheterie.nom}</h2>
+        ${await getHoraireContent(decheterie.identifiant)}
         <a href="https://www.google.com/maps/search/?api=1&query=${decheterie.geo_point_2d.lat}%2C${decheterie.geo_point_2d.lon}" target ="_blank">Adresse : ${decheterie.adresse}</a>
         <h3>Déchets acceptés :</h3>
         <div class="type-dechets-grid-container">${dechets.join('')}</div>
     </div>
         `
+}
+
+
+// function permettant de renvoyer jusqu'a quelle heure une decheterie ecopoint est ouverte
+export async function getHoraireContent(id) {
+    let horaire_actuel = await getHoraireDecheterie(id);
+    if (horaire_actuel === undefined) {
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/horaire_inconnu.png" alt="red_clock"> Horaire non disponible</div>`;
+    }
+    // COmprarer l'heure actuelle avec l'heure de fermeture
+    let heure_fermeture = horaire_actuel.heure_fin;
+    let horaire_ouverture = horaire_actuel.heure_debut;
+    let heure_actuelle = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+    if (heure_actuelle > heure_fermeture) {
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/red_clock.png" alt="red_clock"> Fermé aujourd'hui</div>`;
+    }
+    if (heure_actuelle < horaire_ouverture) {
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/orange_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
+    }
+
+    return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/green_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
+
 }
