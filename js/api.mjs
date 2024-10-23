@@ -1,11 +1,13 @@
 import { jours } from "./constante.mjs";
 
 let base_url = 'https://data.nantesmetropole.fr'
-
+/**
+ * Renvoie tout les composteurs de quartier de Nantes Métropole
+ * @returns {Promise<Array<Object>>} Les composteurs
+ */
 export async function getComposteurs() {
     const composteurs = [];
 
-    // Liste des requêtes avec les différents offsets
     const requests = [
         fetch(`${base_url}/api/explore/v2.1/catalog/datasets/512042839_composteurs-quartier-nantes-metropole/records?limit=100&offset=0`),
         fetch(`${base_url}/api/explore/v2.1/catalog/datasets/512042839_composteurs-quartier-nantes-metropole/records?limit=100&offset=100`),
@@ -13,10 +15,8 @@ export async function getComposteurs() {
         fetch(`${base_url}/api/explore/v2.1/catalog/datasets/512042839_composteurs-quartier-nantes-metropole/records?limit=100&offset=300`)
     ];
 
-    // Attendre que toutes les requêtes soient terminées
     const responses = await Promise.all(requests);
 
-    // Traiter chaque réponse
     for (const response of responses) {
         const data = await response.json();
         if (Array.isArray(data.results)) {
@@ -25,14 +25,16 @@ export async function getComposteurs() {
             console.error('Les résultats ne sont pas un tableau:', data.results);
         }
     }
-
-
-    return composteurs; // Retourner les composteurs une fois que tout est terminé
+    return composteurs; 
 }
 
 
 
-
+/**
+ * Renvoie les lieux (décheteries ou/et écopoints) de triage demandés par l'utilisateur
+ * @param {Array<string>} lieux Les lieux de triage demandés par l'utilisateur
+ * @returns La liste des lieux demandés par l'utilisateur
+ */
 export async function getLieuxTriage(lieux) {
     let result = [];
     for (let lieu of lieux) {
@@ -50,18 +52,34 @@ export async function getLieuxTriage(lieux) {
     return result;
 
 }
-
+/**
+ * Renvoie les déchèteries
+ * @returns {Promise<Array<Object>>} Les déchèteries
+ */
 export async function getDecheteries() {
     return await getLieuxTriage(["Déchèterie"]);
 }
-
+/**
+ * Renvoie les ecopoints
+ * @returns {Promise<Array<Object>>} Les ecopoints
+ */
 export async function getEcopoints() {
     return await getLieuxTriage(["Ecopoint"]);
 }
-
+/**
+ * Renvoie les déchèteries et les ecopoints
+ * @returns {Promise<Array<Object>>} Les déchèteries et les ecopoints
+ */
 export async function getDecheteriesEtEcopoints() {
     return await getLieuxTriage(["Déchèterie", "Ecopoint"]);
 }
+/**
+ * 
+ * @param {Array<string>} dechets Liste des déchets demandés par l'utilisateur 
+ * @param {boolean} decheterie Vaut true si l'utilisateur veut des déchèteries
+ * @param {boolean} ecopoints Valeur true si l'utilisateur veut des ecopoints
+ * @returns 
+ */
 export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, decheterie, ecopoints) {
     let lieux = [];
     if (decheterie) {
@@ -79,7 +97,11 @@ export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, dech
 
     return lieuxFiltres;
 }
-
+/**
+ * Renvoie les horaires de la déchèterie pour le jour actuel.
+ * @param {int} id identifiant de la déchèterie
+ * @returns {Promise<Object>} Les horaires de la déchèterie
+ */
 export async function getHoraireDecheterie(id) {
     // Jour de la semaine
     let jour = new Date().getDay();

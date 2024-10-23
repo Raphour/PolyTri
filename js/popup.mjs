@@ -1,7 +1,12 @@
 import { formatDechet } from "./utils.mjs";
-import { jours, typeDechetsDecheterie } from "./constante.mjs";
+import { typeDechetsDecheterie } from "./constante.mjs";
 import { getHoraireDecheterie } from "./api.mjs";
 
+/**
+ * Renvoie le contenu du popup pour un composteur donné.
+ * @param {Object} composteur 
+ * @returns {Promise<string>} Le contenu de la popup au format HTML.
+ */
 export function getComposteurPopUp(composteur) {
     return `<h2>${composteur.nom}</h2>
         <p>${composteur.categorie}</p>
@@ -9,8 +14,11 @@ export function getComposteurPopUp(composteur) {
         <a href="${composteur.lien}" target="_blank">Plus d'informations</a>`
 }
 
-
-
+/**
+ * Renvoi le contenu du popup pour une déchèterie donnée.
+ * @param {Object} decheterie - L'objet déchèterie.
+ * @returns {Promise<string>} Le contenu de la popup au format HTML.
+ */
 export async function getDecheteriePopUp(decheterie) {
     let type_dechets = typeDechetsDecheterie;
     let dechets = type_dechets.map(dechet => {
@@ -33,13 +41,17 @@ export async function getDecheteriePopUp(decheterie) {
 }
 
 
-// function permettant de renvoyer jusqu'a quelle heure une decheterie ecopoint est ouverte
+/**
+ * Récupère le contenu horaire pour une déchèterie donnée.
+ * 
+ * @param {string} id - L'identifiant de la déchèterie.
+ * @returns {Promise<string>} Le contenu horaire au format HTML.
+ */
 export async function getHoraireContent(id) {
     let horaire_actuel = await getHoraireDecheterie(id);
     if (horaire_actuel === undefined) {
         return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/horaire_inconnu.png" alt="red_clock"> Horaire non disponible</div>`;
     }
-    // COmprarer l'heure actuelle avec l'heure de fermeture
     let heure_fermeture = horaire_actuel.heure_fin;
     let horaire_ouverture = horaire_actuel.heure_debut;
     let heure_actuelle = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -50,7 +62,6 @@ export async function getHoraireContent(id) {
     if (heure_actuelle < horaire_ouverture) {
         return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/orange_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
     }
-
     return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/green_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
 
 }
