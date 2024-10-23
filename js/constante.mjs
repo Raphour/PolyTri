@@ -1,6 +1,30 @@
 export let typeDechetsDecheterie = ["bois", "carton", "deee", "pneus", "verre", "mobilier", "extincteur", "batterie", "gravat", "encombrant", "ferraille", "huile_moteur", "papier", "placoplatre", "textile", "dechet_vert", "pile", "cartouche", "neon", "dechet_dangereux", "bouteille_gaz", "polystyrene"];
 export let typeLieuTriage = ["composteur", "decheterie"];
 export let jours = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+export let formatageTypeDechet = {
+    "bois": "Bois",
+    "carton": "Carton",
+    "deee": "DEEE",
+    "pneus": "Pneus",
+    "verre": "Verre",
+    "mobilier": "Mobilier",
+    "extincteur": "Extincteur",
+    "batterie": "Batterie",
+    "gravat": "Gravat",
+    "encombrant": "Encombrant",
+    "ferraille": "Ferraille",
+    "huile_moteur": "Huile moteur",
+    "papier": "Papier",
+    "placoplatre": "Placoplatre",
+    "textile": "Textile",
+    "dechet_vert": "Déchet vert",
+    "pile": "Pile",
+    "cartouche": "Cartouche",
+    "neon": "Néon",
+    "dechet_dangereux": "Déchets dangereux",
+    "bouteille_gaz": "Bouteille de gaz",
+    "polystyrene": "Polystyrène"
+}
 export let markerDecheterie = L.Marker.extend({
     options:{
         identifiant:0,

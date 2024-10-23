@@ -1,7 +1,6 @@
 import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesEtEcopointsParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
-import { markerDecheterie, typeDechetsDecheterie, greenIcon, blueIcon,brownIcon } from "./constante.mjs";
-import { formatDechet } from "./utils.mjs";
+import { markerDecheterie, typeDechetsDecheterie, greenIcon, blueIcon,brownIcon, formatageTypeDechet } from "./constante.mjs";
 import { Parameters } from "./Parameters.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
     let params = new Parameters();
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         checkbox.checked = false;
         let label = document.createElement("label");
         label.htmlFor = dechet;
-        label.innerText = formatDechet(dechet);
+        label.innerText = formatageTypeDechet[dechet];
         type_container.appendChild(checkbox);
         type_container.appendChild(label);
         type_dechets_filter_container.appendChild(type_container);
@@ -174,7 +173,7 @@ function setupFilterTypeDechet() {
         checkbox.checked = false;
         let label = document.createElement("label");
         label.htmlFor = dechet;
-        label.innerText = formatDechet(dechet);
+        label.innerText = formatageTypeDechet[dechet];
         type_container.appendChild(checkbox);
         type_container.appendChild(label);
         type_dechets_filter_container.appendChild(type_container);
