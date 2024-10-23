@@ -52,15 +52,22 @@ export async function getHoraireContent(id) {
     if (horaire_actuel === undefined) {
         return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/horaire_inconnu.png" alt="red_clock"> Horaire non disponible</div>`;
     }
+    if (horaire_actuel.date_exception != null && horaire_actuel.type_horaire === "Fermeture") {
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/red_clock.png" alt="red_clock"> Fermé(e) exceptionnellement</div>`;
+    }
+
     let heure_fermeture = horaire_actuel.heure_fin;
     let horaire_ouverture = horaire_actuel.heure_debut;
     let heure_actuelle = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
+    if (horaire_actuel.date_exception != null && horaire_actuel.type_horaire === "Ouverture" && heure_actuelle > horaire_ouverture && heure_actuelle < heure_fermeture) {
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/green_clock.png" alt="green_clock"> Ouvert(e) exceptionnellement de ${horaire_ouverture} à ${heure_fermeture}</div>`;
+    }
     if (heure_actuelle > heure_fermeture) {
-        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/red_clock.png" alt="red_clock"> Fermé aujourd'hui</div>`;
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/red_clock.png" alt="red_clock"> Fermé(e)</div>`;
     }
     if (heure_actuelle < horaire_ouverture) {
-        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/orange_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
+        return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/orange_clock.png" alt="green_clock"> Ouvre aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
     }
     return `<div class="horaire_popup_container"> <img class="icon_horaire" src="assets/green_clock.png" alt="green_clock"> Ouvert aujourd'hui de ${horaire_ouverture} à ${heure_fermeture}</div>`;
 

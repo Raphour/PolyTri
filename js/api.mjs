@@ -103,10 +103,7 @@ export async function getDecheteriesEtEcopointsParDechetsPossibles(dechets, dech
  * @returns {Promise<Object>} Les horaires de la déchèterie
  */
 export async function getHoraireDecheterie(id) {
-    // Jour de la semaine
     let jour = new Date().getDay();
-    let heure_minute = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-    // date sous le format YYYY-MM-DD
     let date = new Date().toISOString().split('T')[0];
 
     let link = `/api/explore/v2.1/catalog/datasets/244400404_decheteries-ecopoints-nantes-metropole-horaires/records?where=idobj%3D${id}%20and%20%22${date}%22%3Edate_debut%20and%20%22${date}%22%3Cdate_fin%20and%20jour%3D%22${jours[jour]}%22&limit=20`

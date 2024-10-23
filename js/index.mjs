@@ -75,11 +75,7 @@ async function displayDecheterie(params, firstDisplay) {
             marker.addTo(params.groupeToutesDecheteries);
         })
     }
-    params.groupeDecheteriesAffichees.eachLayer(
-        (layer) => {
-            console.log(layer.options.identifiant)
-        }
-    )
+
     params.groupeDecheteriesAffichees.addTo(params.map);
 }
 
@@ -112,18 +108,16 @@ async function manageFilterButton(params) {
     });
 }
 function filterLieux(params, decheterie, ecopoints, dechets) {
-    // vider le groupdecheteriesaffichees
     params.groupeDecheteriesAffichees.clearLayers()
     params.groupeToutesDecheteries.eachLayer(layer => {
         if (layer.options.type === "Déchèterie" && decheterie || layer.options.type === "Ecopoint" && ecopoints) {
             let dechets_acceptes = layer.options.type_dechets_acceptes;
             let dechet_present = dechets.every(dechet => dechets_acceptes.includes(dechet));
             if (dechet_present) {
-                console.log("présent")
                 layer.addTo(params.groupeDecheteriesAffichees);
             }
         }
-        
+
     })
 }
 
