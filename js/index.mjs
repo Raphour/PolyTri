@@ -1,6 +1,6 @@
 import { getComposteurs, getDecheteries, getDecheteriesEtEcopoints, getDecheteriesEtEcopointsParDechetsPossibles } from "./api.mjs";
 import { getComposteurPopUp, getDecheteriePopUp } from "./popup.mjs";
-import { markerDecheterie, typeDechetsDecheterie } from "./constante.mjs";
+import { markerDecheterie, typeDechetsDecheterie, greenIcon, blueIcon,brownIcon } from "./constante.mjs";
 import { formatDechet } from "./utils.mjs";
 import { Parameters } from "./Parameters.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
@@ -46,7 +46,10 @@ async function displayComposteurs(params, firstDisplay) {
     if (firstDisplay) {
         let composteurs = await getComposteurs();
         composteurs.forEach(composteur => {
-            let marker = L.marker([composteur.location.lat, composteur.location.lon]);
+            let marker = L.marker([composteur.location.lat, composteur.location.lon],
+                {
+                    icon: brownIcon
+                });
             marker.bindPopup(getComposteurPopUp(composteur));
             marker.addTo(params.groupeComposteurs);
         })
@@ -65,7 +68,8 @@ async function displayDecheterie(params, firstDisplay) {
                 {
                     identifiant: decheterie.identifiant,
                     type_dechets_acceptes: typeDechetsDecheterie.filter(dechet => decheterie[dechet] === "oui"),
-                    type: decheterie.type
+                    type: decheterie.type,
+                    icon: decheterie.type === "Déchèterie" ? greenIcon : blueIcon
                 });
             marker.bindPopup(await getDecheteriePopUp(decheterie),
                 {
