@@ -1,0 +1,129 @@
+body {
+	max-height: 100vh;
+	margin: 0px;
+
+	font-family: "Roboto", sans-serif;
+}
+
+.main {
+	position: relative;
+	top: 0px;
+}
+
+h1 {
+	font-weight: 800;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+	color: rgb(0, 54, 103);
+}
+
+h6 {
+	font-weight: 500;
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#bulle {
+	z-index: 1;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	
+	border: 3px solid rgb(0, 156, 221);
+	border-radius: 5px;
+	padding: 10px;
+	background-color: white;
+
+	& img {
+		width: 15vw;
+	}
+
+	& p {
+		font-size: 22px;
+		font-weight: 600;
+		margin: 0px;		
+		color: rgb(0, 54, 103);
+	}
+}
+
+input[type="checkbox"] {
+	margin: 0px;
+	margin-right: 5px;
+	margin-left: 10px;
+	color: rgb(0, 54, 103);
+}
+
+label {		
+	color: rgb(0, 54, 103);
+	font-weight: 500;
+}
+
+.separator {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 90%;
+	height: 3px;
+	background-color: rgb(0, 54, 103);
+}
+
+button {
+	margin-top: 15px;
+	width: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+	height: auto;
+	border: 2px solid rgb(0, 54, 103);
+	border-radius: 3px;
+	background-color: rgb(0, 156, 221);
+	font-size: 22px;
+	font-family: "Roboto", sans-serif;
+	font-weight: 500;
+	color: white;
+	cursor: pointer;
+
+	&:hover {
+		color: rgb(0, 156, 221);
+		background-color: white;
+	}
+}
+
+#map {
+	position: relative;
+	top: 0px;
+	height: 95vh;
+	z-index: 0;
+}
+
+#type-dechets-filter-container
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.type-lieux-filter-container{
+	display: flex;
+	flex-direction: column;
+}
+footer {
+	& .separator {
+		margin: 0px;
+		height: 10%;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	bottom: 0px;
+	color: white;
+	text-align: center;
+	background-color: rgb(0, 156, 221);
+	height: 5vh;
+}
+
+.logo-polytech-container{
+	display : flex;
+	align-items: center;
+	justify-content: center;
+}
