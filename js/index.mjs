@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         maxZoom: 20,
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>'
     }).addTo(params.map);
-    //await displayComposteurs(map,true, categorieComposteurs);
-    await displayDecheterie(params, true);
+    await displayComposteurs(params,true);
+    // await displayDecheterie(params, true);
     // setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
 
-    manageFilterButton(params);
-    manageSwitchCheckboxLieu();
+    // manageFilterButton(params);
+    // manageSwitchCheckboxLieu();
     // On rempli le type-dechets-filter-container avec les types de déchets
     let type_dechets_filter_container = document.getElementById("type-dechets-filter-container");
     typeDechetsDecheterie.forEach(dechet => {
