@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>'
     }).addTo(params.map);
     await displayComposteurs(params,true);
-    // await displayDecheterie(params, true);
+    await displayDecheterie(params, true);
     // setupButtonFiltreTypeDechetsDecheterie(categorieDecheteries, map);
 
     // manageFilterButton(params);
