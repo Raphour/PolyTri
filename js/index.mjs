@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await displayDecheterie(params, true);
 
     manageFilterButton(params);
+    manageFilterButton(params);
     manageSwitchCheckboxLieu();
     // On rempli le type-dechets-filter-container avec les types de déchets
     setupFilterTypeDechet()
