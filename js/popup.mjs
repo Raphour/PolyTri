@@ -57,6 +57,8 @@ export async function getHoraireContent(id) {
 
     let heure_fermeture = horaire_actuel.heure_fin;
     let horaire_ouverture = horaire_actuel.heure_debut;
+    console.log(horaire_ouverture);
+    console.log(heure_fermeture);
     let heure_actuelle = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
 
     if (horaire_actuel.date_exception != null && horaire_actuel.type_horaire === "Ouverture" && heure_actuelle > horaire_ouverture && heure_actuelle < heure_fermeture) {

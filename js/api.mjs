@@ -111,6 +111,7 @@ export async function getHoraireDecheterie(id) {
         .then(response => response.json())
         .then(data => {
             if (Array.isArray(data.results)) {
+                console.log(data.results[0]);
                 return data.results[0];
             } else {
                 return undefined;

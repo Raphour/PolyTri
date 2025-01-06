@@ -17,22 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     manageFilterButton(params);
     manageSwitchCheckboxLieu();
     // On rempli le type-dechets-filter-container avec les types de déchets
-    let type_dechets_filter_container = document.getElementById("type-dechets-filter-container");
-    typeDechetsDecheterie.forEach(dechet => {
-        let type_container = document.createElement("div");
-        type_container.setAttribute("class", "type-dechet-container");
-        let checkbox = document.createElement("input");
-        checkbox.setAttribute("class", "type-dechet-checkbox");
-        checkbox.type = "checkbox";
-        checkbox.id = dechet;
-        checkbox.checked = false;
-        let label = document.createElement("label");
-        label.htmlFor = dechet;
-        label.innerText = formatageTypeDechet[dechet];
-        type_container.appendChild(checkbox);
-        type_container.appendChild(label);
-        type_dechets_filter_container.appendChild(type_container);
-    });
+    setupFilterTypeDechet()
 
 });
 
