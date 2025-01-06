@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
+    <title>Fonctionnement du site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .btn-retour {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-retour:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Comment fonctionne ce site ?</h1>
+    <p>Ce site répertorie les différentes déchèteries, éco-points et composteurs de la ville de Nantes. 
+       Il vous permet de trier les lieux en fonction du type de déchets que vous souhaitez déposer. 
+       Les données affichées proviennent du site <a href="https://data.nantesmetropole.fr" target="_blank">data.nantesmetropole.fr</a>, 
+       une source officielle et fiable.</p>
+    <a href="javascript:history.back()" class="btn-retour">Retour</a>
+
+    <footer>
+        <div class="separator"></div>
+        Projet réalisé par SILLY Raphael, TOFANI Enzo, PIERRE Pablo, MAHDIR Hamza et EL MAGHRAOUI Yassine <a href="page/sources.html">Sources</a>
+    </footer>
+
+</body>
+</html>

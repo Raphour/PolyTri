@@ -3,9 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horaires</title>
+    <title>PolyTri</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .btn-retour {
+            padding: 5px 15px;
+            font-size: 1em;
+            color: #007BFF;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-retour:hover {
+            background-color: #f0f0f0;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <h1>PolyTri</h1>
+        <a href="javascript:history.back()" class="btn-retour">Retour</a>
+    </header>
 </body>
 </html>
